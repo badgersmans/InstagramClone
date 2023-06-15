@@ -47,6 +47,9 @@ const styles = StyleSheet.create({
     description: {
         fontWeight: 'bold'
     },
+    lessMoreText: {
+        color: 'grey'
+    }
 });
 
 export default styles;
