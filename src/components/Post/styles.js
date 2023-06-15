@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginRight: 20,
+        // paddingTop: '5%',
     },
     profileImage: {
         width: '11%',
@@ -45,11 +46,6 @@ const styles = StyleSheet.create({
     },
     description: {
         fontWeight: 'bold'
-    },
-    commentContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        // backgroundColor: 'red'
     },
 });
 

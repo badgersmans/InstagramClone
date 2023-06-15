@@ -1,14 +1,10 @@
-import { View, Text } from 'react-native'
-import colors from './src/theme/colors'
-import fonts from './src/theme/fonts'
-import Post from './src/components/Post/Post'
+import { View } from 'react-native'
+import HomeScreen from './src/screens/HomeScreen/HomeScreen';
 
 const App = () => {
-
-
   return (
     <View style={{flex: 1}}>
-      <Post />
+      <HomeScreen />
     </View>
   )
 }

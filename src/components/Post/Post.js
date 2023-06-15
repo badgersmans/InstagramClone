@@ -3,8 +3,9 @@ import React from 'react'
 import styles from './styles'
 import { Image } from 'expo-image';
 import { MaterialCommunityIcons, AntDesign, Ionicons, Feather } from '@expo/vector-icons';
+import Comment from '../Comment';
 
-const Post = () => {
+const Post = ({post}) => {
     const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
@@ -13,18 +14,18 @@ const Post = () => {
         <View style={styles.postHeader}>
             <Image
                 style={styles.profileImage}
-                source="https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg"
+                source={post.image}
                 placeholder={blurhash}
                 contentFit="cover"
                 transition={300}
             />
-            <Text style={styles.name}>Shawn</Text>
+            <Text style={styles.name}>{post.user.username}</Text>
             <MaterialCommunityIcons name="dots-horizontal" style={styles.dotIcon}/>
         </View>
 
       <Image
         style={styles.image}
-        source="https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg"
+        source={post.image}
         placeholder={blurhash}
         contentFit="cover"
         transition={300}
@@ -60,31 +61,21 @@ const Post = () => {
 
         <Text>
             Liked by 
-            <Text style={{fontWeight: 'bold'}}> shawnlts6 </Text>
+            <Text style={{fontWeight: 'bold'}}> {post.user.username} </Text>
             and 
-            <Text style={{fontWeight: 'bold'}}> 66 others </Text>
+            <Text style={{fontWeight: 'bold'}}> {post.nofLikes} others </Text>
         </Text>
 
-        <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}}>shawnlts6
-            <Text style={{fontWeight: 'normal'}}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus accusantium nam sdfsdfddse animi excepturi expedita repudiandae, maxime deleniti accusamus eos voluptatibus nostrum suscipit blanditiis voluptatum dolorem facilis in reiciendis?</Text>
+        <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}} numberOfLines={3}>{post.user.username}
+            <Text style={{fontWeight: 'normal'}}> {post.description}</Text>
         </Text>
 
-        <Text style={{color: 'grey', marginTop: '2%'}}>View all 66 comments</Text>
-        <View style={styles.commentContainer}>
-            <Text style={{fontWeight: 'bold', lineHeight: 19}}>shawnlts6
-                <Text style={{fontWeight: 'normal'}}> Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus</Text>
-            </Text>
-            <AntDesign
-                name={'hearto'}
-                size={18}
-                style={[styles.icon, {marginLeft: 'auto'}]}
-                color={'black'}
-            />
-        </View>
-        <Text style={{color: 'grey', marginTop: '2%', fontSize: 13}}>19th December 2022</Text>
+        <Text style={{color: 'grey', marginTop: '2%'}}>View all {post.nofComments} comments</Text>
+        {post.comments.map(comment => (
+            <Comment comment={comment} key={comment.id}/>
+        ))}
+        <Text style={{color: 'grey', marginTop: '2%', fontSize: 13}}>{post.createdAt}</Text>
     </View>
-
-
 
     </SafeAreaView>
   )
