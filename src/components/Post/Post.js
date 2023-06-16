@@ -6,13 +6,14 @@ import { MaterialCommunityIcons, AntDesign, Ionicons, Feather } from '@expo/vect
 import Comment from '../Comment';
 import DoublePressable from '../DoublePressable/DoublePressable';
 import Carousel from '../Carousel/Carousel';
+import VideoPlayer from '../VideoPlayer/VideoPlayer';
 
-const Post = ({post}) => {
+const Post = ({post, isVisible}) => {
     const [isDescExpanded, setIsDescExpanded] = useState(false);
     const [like, setLike] = useState(false)
     const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
-
+// console.log(isVisible)
   const toggleLike = () => {
     setLike((v) => !v)
   }
@@ -32,6 +33,12 @@ const Post = ({post}) => {
     )
   } else if(post.images) {
     content = <Carousel images={post.images} onDoublePress={toggleLike}/>
+  } else if(post.video){
+    content = (
+        <DoublePressable onDoublePress={toggleLike}>
+            <VideoPlayer uri={post.video} paused={isVisible}/>
+        </DoublePressable>
+    )
   }
 
   return (
@@ -48,7 +55,6 @@ const Post = ({post}) => {
             <MaterialCommunityIcons name="dots-horizontal" style={styles.dotIcon}/>
         </View>
 
-    
         {content}
 
     <View style={styles.footer}>
