@@ -1,10 +1,11 @@
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, Image as RNImage } from 'react-native'
 import React, { useState } from 'react'
 import styles from './styles'
 import { Image } from 'expo-image';
 import { MaterialCommunityIcons, AntDesign, Ionicons, Feather } from '@expo/vector-icons';
 import Comment from '../Comment';
 import DoublePressable from '../DoublePressable/DoublePressable';
+import Carousel from '../Carousel/Carousel';
 
 const Post = ({post}) => {
     const [isDescExpanded, setIsDescExpanded] = useState(false);
@@ -13,7 +14,24 @@ const Post = ({post}) => {
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
   const toggleLike = () => {
-    setLike(!like)
+    setLike((v) => !v)
+  }
+
+  let content = null;
+  if(post.image) {
+    content = (
+        <DoublePressable onDoublePress={toggleLike}>
+            <Image
+                style={styles.image}
+                source={post.image}
+                placeholder={blurhash}
+                contentFit="cover"
+                transition={300}
+            />
+        </DoublePressable>
+    )
+  } else if(post.images) {
+    content = <Carousel images={post.images} onDoublePress={toggleLike}/>
   }
 
   return (
@@ -21,7 +39,7 @@ const Post = ({post}) => {
         <View style={styles.postHeader}>
             <Image
                 style={styles.profileImage}
-                source={post.image}
+                source={post.user.image}
                 placeholder={blurhash}
                 contentFit="cover"
                 transition={300}
@@ -30,15 +48,8 @@ const Post = ({post}) => {
             <MaterialCommunityIcons name="dots-horizontal" style={styles.dotIcon}/>
         </View>
 
-    <DoublePressable onDoublePress={toggleLike}>
-        <Image
-            style={styles.image}
-            source={post.image}
-            placeholder={blurhash}
-            contentFit="cover"
-            transition={300}
-        />
-    </DoublePressable>
+    
+        {content}
 
     <View style={styles.footer}>
         <View style={styles.iconContainer}>

@@ -2,12 +2,13 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
     container: {
-        // backgroundColor: 'red'
+        // backgroundColor: 'red',
+        // flex: 1,
     },
     image: {
         width: '100%',
         aspectRatio: 1,
-        backgroundColor: 'red',
+        // backgroundColor: 'red',
         // marginTop: '-5%'
     },
     postHeader: {
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     profileImage: {
         width: '11%',
         aspectRatio: 1,
-        borderRadius: '50%',
+        borderRadius: 2000,
         marginRight: '3%',
         margin: '3%'
     },

@@ -1,13 +1,18 @@
 export default posts = 
 [
   {
-    "id": "1",
+    "id": "5",
     "createdAt": "19 December 2021",
-    "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg",
+    "images": [
+      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg",
+      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/2.jpg",
+      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/3.jpg",
+      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/4.jpg",
+    ],
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic repellendus unde blanditiis. Eos fugiat dolorem ea fugit aut sapiente corrupti autem dolores deleniti architecto, omnis, amet unde dignissimos quam minima?",
     "user": {
       "id": "u1",
-      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg",
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/4.jpg",
       "username": "vadimnotjustdev"
     },
     "nofComments": 11,
@@ -26,6 +31,7 @@ export default posts =
         "comment": "Lorem ipsum dolor sit amet consectetur adipisicing elit. H",
         "user": {
           "id": "u1",
+          "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg",
           "username": "vadimnotjustdev"
         }
       }
@@ -34,7 +40,12 @@ export default posts =
   {
     "id": "2",
     "createdAt": "19 December 2021",
-    "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/2.jpg",
+    "images": [
+      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/2.jpg",
+      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg",
+      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/3.jpg",
+      "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/4.jpg",
+    ],
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic repellendus unde blanditiis. Eos fugiat dolorem ea fugit aut sapiente corrupti autem dolores deleniti architecto, omnis, amet unde dignissimos quam minima?",
     "user": {
       "id": "u1",
@@ -123,5 +134,5 @@ export default posts =
         }
       }
     ]
-  }
+  },
 ]
