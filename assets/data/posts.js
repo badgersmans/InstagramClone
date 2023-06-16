@@ -20,7 +20,7 @@ export default posts =
     "comments": [
       {
         "id": "1",
-        "comment": "Lorem ipsum dolor sit amet consectetur adipisicing elit. H",
+        "comment": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet quo, dicta fugiat totam voluptatum at rerum quidem minus possimus maxime ea sed, inventore dolorum cupiditate hic earum aperiam? Labore odit, asperiores ducimus perspiciatis ipsa autem eligendi molestias repellendus, inventore culpa ipsum ullam sit distinctio sint saepe velit. Sequi repellat harum dolores in expedita! Repellendus pariatur dolores eligendi. Dignissimos, quaerat minus. Culpa ipsum accusamus omnis, aspernatur soluta fuga molestias voluptas expedita veritatis voluptatibus eum obcaecati quasi nihil qui. Sed temporibus impedit aut ex. Adipisci sequi sapiente quisquam quis iste cumque, odio, eum atque, architecto dolorum facere. Natus tenetur laudantium nesciunt est!",
         "user": {
           "id": "u1",
           "username": "vadimnotjustdev"

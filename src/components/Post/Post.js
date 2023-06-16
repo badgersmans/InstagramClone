@@ -93,7 +93,7 @@ const Post = ({post, isVisible}) => {
             <Text style={{fontWeight: 'bold'}}> {post.nofLikes} others </Text>
         </Text>
 
-        <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}} numberOfLines={isDescExpanded ? null : 3}>{post.user.username}
+        <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}} numberOfLines={isDescExpanded ? null : 2}>{post.user.username}
             <Text style={{fontWeight: 'normal'}}> {post.description}</Text>
         </Text>
         <Text style={styles.lessMoreText} onPress={() => setIsDescExpanded(!isDescExpanded)}>Read {isDescExpanded ? 'Less' : 'More'}</Text>
