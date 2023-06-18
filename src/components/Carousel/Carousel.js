@@ -52,8 +52,9 @@ const Carousel = ({ images, onDoublePress = () => {} }) => {
           <View style={{
             width: '2.5%',
             aspectRatio: 1,
+            marginRight: '2%',
             backgroundColor: activeImageIndex === index ? 'grey' : 'white',
-            borderRadius: '100%',
+            borderRadius: 2000,
           }} key={image}/>
         ))}
       </View>
@@ -65,7 +66,7 @@ const Carousel = ({ images, onDoublePress = () => {} }) => {
 const styles = StyleSheet.create({
   dotsContainer: {
       flexDirection: 'row',
-      gap: '8%',
+      // gap: '10%',
       justifyContent: 'center',
       position: 'absolute',
       // backgroundColor: 'yellow',

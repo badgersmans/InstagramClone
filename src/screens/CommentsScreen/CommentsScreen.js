@@ -4,6 +4,7 @@ import comments from '../../../assets/data/comments.json'
 import styles from './styles'
 import { FlashList } from '@shopify/flash-list';
 import Comment from '../../components/Comment/Comment';
+import Input from './Input';
 
 
 const CommentsScreen = () => {
@@ -17,6 +18,7 @@ const CommentsScreen = () => {
           showsVerticalScrollIndicator={false}
           estimatedItemSize={20}
       />
+      <Input />
     </SafeAreaView>
   )
 }

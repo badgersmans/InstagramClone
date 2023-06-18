@@ -7,7 +7,7 @@ import { Image } from 'expo-image';
 const Comment = ({ comment, includeDetails = false, margin = '2%' }) => {
   const [isCommentExpanded, setIsCommentExpanded] = useState(false);
   const [like, setLike] = useState(false);
-  console.log(margin)
+  // console.log(margin)
   // console.log(comment.comment.length)
   const COMMENT_BREAKPOINT = 115;
   const blurhash =
@@ -46,9 +46,9 @@ const Comment = ({ comment, includeDetails = false, margin = '2%' }) => {
 
         {includeDetails && (
         <View style={styles.footer}>
-          <Text>2d</Text>
-          <Text>5 likes</Text>
-          <Text>Reply</Text>
+          <Text style={styles.footerText}>2d</Text>
+          <Text style={styles.footerText}>5 likes</Text>
+          <Text style={styles.footerText}>Reply</Text>
         </View>
         )}
 

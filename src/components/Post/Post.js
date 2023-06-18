@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Image as RNImage } from 'react-native'
+import { View, Text, Image as RNImage } from 'react-native'
 import React, { useState } from 'react'
 import styles from './styles'
 import { Image } from 'expo-image';
@@ -7,6 +7,7 @@ import Comment from '../Comment';
 import DoublePressable from '../DoublePressable/DoublePressable';
 import Carousel from '../Carousel/Carousel';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Post = ({post, isVisible}) => {
     const [isDescExpanded, setIsDescExpanded] = useState(false);

@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         flexDirection: 'row',
-        gap: 10,
+        // gap: 10,
         marginVertical: 10,
         alignItems: 'center',
     },
     icon: {
-
+        marginRight: '2.5%',
     },
     description: {
         fontWeight: 'bold'

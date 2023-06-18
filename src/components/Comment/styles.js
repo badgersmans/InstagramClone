@@ -19,10 +19,13 @@ const styles = StyleSheet.create({
     },
     footer: {
         flexDirection: 'row',
-        gap: '10%',
+        // gap: '10%',
         marginTop: '1.5%',
         // marginBottom: '20%',
         // backgroundColor: 'red'
+    },
+    footerText: {
+        marginRight: '3%'
     }
 });
 
