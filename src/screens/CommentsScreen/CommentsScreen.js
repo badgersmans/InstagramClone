@@ -9,6 +9,7 @@ import Input from './Input';
 
 const CommentsScreen = () => {
   return (
+    <>
     <SafeAreaView style={styles.container}>
       <FlashList
           data={comments}
@@ -18,8 +19,9 @@ const CommentsScreen = () => {
           showsVerticalScrollIndicator={false}
           estimatedItemSize={20}
       />
-      <Input />
     </SafeAreaView>
+    <Input />
+    </>
   )
 }
 
