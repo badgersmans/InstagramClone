@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
         width: 85,
     },
     input: {
-        flex: 1,
         // backgroundColor: 'red',
         borderBottomWidth: 1,
         borderColor: 'lightgrey',
@@ -46,6 +45,15 @@ const styles = StyleSheet.create({
         color: colors.primary,
         fontSize: 16,
         fontWeight: '500'
+    },
+    inputAndErrorContainer: {
+        flex: 1,
+    },
+    errorText: {
+        color: 'red',
+        marginTop: 10,
+        // textTransform: 'capitalize'
+        // fontWeight: '400'
     },
 });
 
