@@ -1,10 +1,11 @@
 import { View, Text, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './styles'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Image from '../../components/Image'
 import user from '../../../assets/data/user.json'
 import { useForm, Controller } from "react-hook-form"
+import * as ImagePicker from 'expo-image-picker';
+import Image from '../../components/Image'
 
 const URL_REGEX = /^(?!mailto:)(?:(?:http|https|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?:(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[0-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))|localhost)(?::\d{2,5})?(?:(\/|\?|#)[^\s]*)?$/gi;
 const USERNAME_REGEX = /^[a-zA-Z0-9]+$/gi;
@@ -47,6 +48,7 @@ const Input = ({placeholder = '', multiline = false, control, name, rules = {}})
 }
 
 const EditProfileScreen = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
   const { control, handleSubmit, formState: {errors} } = useForm({
     defaultValues: {
       name: user.name,
@@ -58,15 +60,31 @@ const EditProfileScreen = () => {
 
   const onSubmit = (data) => {
     console.log(data)
+  }
 
+  const onChangePhoto = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1],
+        quality: 1,
+      });
+  
+      // console.log(result);
+  
+      if (!result.canceled) {
+        setSelectedImage(result.assets[0]);
+      }
+    
   }
   // console.log(errors)
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profileContainer}>
-        <Image style={styles.avatar} source='https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg' />
-        <Text style={styles.textButton}>Change profile photo</Text>
+        <Image style={styles.avatar} source={selectedImage?.uri || user.image} />
+        <Text style={styles.textButton} onPress={onChangePhoto}>Change profile photo</Text>
       </View>
 
       <Input 
