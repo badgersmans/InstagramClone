@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         flexDirection: 'row',
-        alignItems: 'flex-end',
+        alignItems: 'center',
         borderTopWidth: 1,
         borderColor: '#DCDCDC',
         paddingVertical: 5,
@@ -21,19 +21,15 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
         borderRadius: 2000,
         marginRight: '3%',
-        // marginBottom: '10%',
-        // margin: '3%'
     },
     input: {
         flex: 1,
-        // borderWidth: 1,
-        // borderColor: 'grey',
         paddingHorizontal: 15,
-        // backgroundColor: 'yellow'
-        // borderRadius: 2000
+        // marginBottom: 10
+        
     },
     postButtonContainer: {
-        marginLeft: 'auto'
+        marginLeft: 'auto',
     },
     postButton: {
         textTransform: 'uppercase',

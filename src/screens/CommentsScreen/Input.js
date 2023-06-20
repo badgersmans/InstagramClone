@@ -33,6 +33,7 @@ const Input = () => {
         value={newComment}
         onChangeText={setNewComment}
       />
+
       <Pressable 
         style={styles.postButtonContainer} 
         onPress={onPost}

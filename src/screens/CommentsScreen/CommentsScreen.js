@@ -17,7 +17,7 @@ const CommentsScreen = () => {
             <Comment comment={item} includeDetails margin="6%"/>
           )}
           showsVerticalScrollIndicator={false}
-          estimatedItemSize={20}
+          estimatedItemSize={60}
       />
     </SafeAreaView>
     <Input />
