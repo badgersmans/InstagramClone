@@ -3,6 +3,7 @@ import HomeScreen from './src/screens/HomeScreen/HomeScreen';
 import CommentsScreen from './src/screens/CommentsScreen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import ProfileScreen from './src/screens/ProfileScreen/ProfileScreen';
+import EditProfileScreen from './src/screens/EditProfileScreen/EditProfileScreen';
 
 const App = () => {
   return (
@@ -10,7 +11,8 @@ const App = () => {
       <View style={{flex: 1}}>
         {/* <HomeScreen /> */}
         {/* <CommentsScreen /> */}
-        <ProfileScreen />
+        {/* <ProfileScreen /> */}
+        <EditProfileScreen />
       </View>
     </SafeAreaProvider>
   )
