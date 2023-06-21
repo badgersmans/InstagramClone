@@ -1,7 +1,6 @@
 import { View, Text, TextInput } from 'react-native'
 import { useState } from 'react'
 import styles from './styles'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import user from '../../../assets/data/user.json'
 import { useForm, Controller } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
@@ -81,7 +80,7 @@ const EditProfileScreen = () => {
   // console.log(errors)
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.profileContainer}>
         <Image style={styles.avatar} source={selectedImage?.uri || user.image} />
         <Text style={styles.textButton} onPress={onChangePhoto}>Change profile photo</Text>
@@ -142,7 +141,7 @@ const EditProfileScreen = () => {
       />
 
       <Text style={styles.textButton} onPress={handleSubmit(onSubmit)}>Submit</Text>
-    </SafeAreaView>
+    </View>
   )
 }
 

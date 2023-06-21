@@ -1,5 +1,5 @@
 import { FlatList, useWindowDimensions, Image as RNImage, View, StyleSheet, Pressable } from 'react-native';
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { Image } from 'expo-image';
 import { FlashList } from '@shopify/flash-list';
 import DoublePressable from '../DoublePressable/DoublePressable';

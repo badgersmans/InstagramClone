@@ -1,7 +1,7 @@
 import { View, Pressable } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styles from './styles'
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import {Camera, CameraType, FlashMode, VideoQuality} from "expo-camera";
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -95,7 +95,7 @@ const PostUploadScreen = () => {
     // }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Camera 
         style={styles.camera}
         type={cameraType}
@@ -114,7 +114,7 @@ const PostUploadScreen = () => {
             {isCameraReady && <Pressable style={[styles.shutterCircle, {backgroundColor: isRecording ? 'red' : 'white'}]} onPress={takePicture} onLongPress={startVideo} onPressOut={stopVideo}/>}
             <MaterialIcons name="flip-camera-ios" size={30} color="white" onPress={flipCamera}/>
       </View>
-    </SafeAreaView>
+    </View>
   )
 }
 

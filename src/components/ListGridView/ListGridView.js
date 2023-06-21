@@ -1,5 +1,4 @@
 import { FlatList } from 'react-native'
-import React from 'react'
 import ListGridItem from './ListGridItem';
 
 const ListGridView = ({data, Header}) => {

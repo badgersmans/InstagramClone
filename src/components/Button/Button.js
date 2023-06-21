@@ -1,5 +1,4 @@
 import { View, Pressable, Text } from 'react-native'
-import React from 'react'
 import styles from './styles'
 
 const Button = ({text = "", onPress = () => {}}) => {

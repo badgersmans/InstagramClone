@@ -1,14 +1,11 @@
 import { View, Text, TextInput, Pressable } from 'react-native'
 import { Image } from 'expo-image';
 import styles from './styles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const Input = () => {
   const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
-  const insets = useSafeAreaInsets();
   const [newComment, setNewComment] = useState('')
 
   const onPost = () => {
@@ -16,7 +13,7 @@ const Input = () => {
     setNewComment('')
   }
   return (
-    <View style={[styles.inputContainer, {marginBottom: insets.bottom}]}>
+    <View style={[styles.inputContainer]}>
 
       <Image
         style={styles.image}

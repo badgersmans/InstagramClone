@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Button from '../../components/Button/Button'
 import styles from './styles'
 import { Image } from 'expo-image';

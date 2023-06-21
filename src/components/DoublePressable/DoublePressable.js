@@ -1,5 +1,4 @@
 import { Pressable } from 'react-native'
-import React from 'react'
 
 const DoublePressable = ({onDoublePress = () => {}, children}) => {
     let lastTap = 0;

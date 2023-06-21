@@ -1,10 +1,10 @@
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import PostUploadScreen from '../screens/PostUploadScreen/PostUploadScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import colors from '../theme/colors';
 import HomeStackNavigator from './HomeStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
+import SearchTabNavigator from './SearchTabNavigator';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
@@ -23,9 +23,10 @@ const BottomTabNavigator = () => {
         />
         <Tab.Screen 
             name="Search"
-            component={HomeScreen}
+            component={SearchTabNavigator}
             options={{
-                tabBarIcon: ({color, size}) => (<MaterialIcons name="search" size={size} color={color} />)
+                tabBarIcon: ({color, size}) => (<MaterialIcons name="search" size={size} color={color} />),
+                headerShown: false
             }}
         />
         <Tab.Screen 

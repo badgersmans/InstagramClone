@@ -1,5 +1,4 @@
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { View } from 'react-native';
 import user from '../../../assets/data/user.json'
 import ProfileHeader from './ProfileHeader'
 import ListGridView from '../../components/ListGridView/ListGridView'
@@ -11,9 +10,9 @@ const ProfileScreen = () => {
 
   console.log(userId)
   return (
-    <SafeAreaView>
+    <View>
       <ListGridView data={user.posts} Header={<ProfileHeader user={user} /> } />
-    </SafeAreaView>
+    </View>
   )
 }
 

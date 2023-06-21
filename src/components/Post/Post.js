@@ -1,5 +1,5 @@
 import { View, Text, Image as RNImage, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './styles'
 import { Image } from 'expo-image';
 import { MaterialCommunityIcons, AntDesign, Ionicons, Feather } from '@expo/vector-icons';

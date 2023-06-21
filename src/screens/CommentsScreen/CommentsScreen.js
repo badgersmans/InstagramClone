@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import comments from '../../../assets/data/comments.json'
 import styles from './styles'
@@ -10,7 +10,7 @@ import Input from './Input';
 const CommentsScreen = () => {
   return (
     <>
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <FlashList
           data={comments}
           renderItem={({ item }) => (
@@ -19,7 +19,7 @@ const CommentsScreen = () => {
           showsVerticalScrollIndicator={false}
           estimatedItemSize={60}
       />
-    </SafeAreaView>
+    </View>
     <Input />
     </>
   )

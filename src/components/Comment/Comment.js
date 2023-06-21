@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
 import { Image } from 'expo-image';
