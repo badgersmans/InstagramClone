@@ -23,7 +23,7 @@ const HomeScreen = () => {
   return (
       <FlatList
         data={posts}
-        renderItem={({ item }) => <Post post={item} isVisible={activePostId === item.id}/>}
+        renderItem={({ item }) => <Post post={item} isVisible={activePostId === item.id} />}
         // estimatedItemSize={20}
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged.current}

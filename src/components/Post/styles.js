@@ -12,13 +12,21 @@ const styles = StyleSheet.create({
         // marginTop: '-5%'
     },
     postHeader: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginRight: 20,
+        // flexDirection: 'row',
+        justifyContent: 'center',
+        // marginRight: 20,
+        // backgroundColor: 'red',
+        // height: '11%'
         // paddingTop: '5%',
     },
+    photoNameContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        // backgroundColor: 'green', 
+        width: '90%'
+    },
     profileImage: {
-        width: '11%',
+        width: '12%',
         aspectRatio: 1,
         borderRadius: 2000,
         marginRight: '3%',
@@ -31,7 +39,9 @@ const styles = StyleSheet.create({
     dotIcon: {
         fontSize: 24,
         color: 'black',
-        marginLeft: 'auto'
+        position: 'absolute',
+        right: 20
+        // marginLeft: 'auto'
     },
     footer: {
         marginHorizontal: 20,

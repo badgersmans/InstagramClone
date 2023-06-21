@@ -1,4 +1,4 @@
-import { View, Text, Image as RNImage } from 'react-native'
+import { View, Text, Image as RNImage, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import styles from './styles'
 import { Image } from 'expo-image';
@@ -7,8 +7,11 @@ import Comment from '../Comment';
 import DoublePressable from '../DoublePressable/DoublePressable';
 import Carousel from '../Carousel/Carousel';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
+import { useNavigation } from '@react-navigation/native';
+
 
 const Post = ({post, isVisible}) => {
+    const navigation = useNavigation();
     const [isDescExpanded, setIsDescExpanded] = useState(false);
     const [like, setLike] = useState(false)
     const blurhash =
@@ -16,6 +19,12 @@ const Post = ({post, isVisible}) => {
 // console.log(isVisible)
   const toggleLike = () => {
     setLike((v) => !v)
+  }
+
+  const navigateToUser = () => {
+    navigation.navigate('UserProfile', {
+        userId: post.user.id,
+    })
   }
 
   let content = null;
@@ -44,14 +53,16 @@ const Post = ({post, isVisible}) => {
   return (
     <View style={styles.container}>
         <View style={styles.postHeader}>
-            <Image
-                style={styles.profileImage}
-                source={post.user.image}
-                placeholder={blurhash}
-                contentFit="cover"
-                transition={300}
-            />
-            <Text style={styles.name}>{post.user.username}</Text>
+            <Pressable style={styles.photoNameContainer} onPress={navigateToUser}>
+                <Image
+                    style={styles.profileImage}
+                    source={post.user.image}
+                    placeholder={blurhash}
+                    contentFit="cover"
+                    transition={300}
+                />
+                <Text style={styles.name}>{post.user.username}</Text>
+            </Pressable>
             <MaterialCommunityIcons name="dots-horizontal" style={styles.dotIcon}/>
         </View>
 

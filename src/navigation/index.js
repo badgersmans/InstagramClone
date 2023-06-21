@@ -1,5 +1,5 @@
-import { View, Text, Image } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native';
+import { Image } from 'react-native'
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import logo from '../../assets/images/signature.png'
@@ -7,11 +7,21 @@ import logo from '../../assets/images/signature.png'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
+  const navTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'transparent',
+    },
+  };
 
 const Navigation = () => {
   return (
-    <NavigationContainer>
-        <Stack.Navigator initialRouteName='Home'>
+    <NavigationContainer theme={navTheme}>
+        <Stack.Navigator 
+            initialRouteName='Home'
+        >
+
             <Stack.Screen 
                 name="Home"
                 component={HomeScreen}
