@@ -7,7 +7,6 @@ import Comment from '../Comment';
 import DoublePressable from '../DoublePressable/DoublePressable';
 import Carousel from '../Carousel/Carousel';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Post = ({post, isVisible}) => {
     const [isDescExpanded, setIsDescExpanded] = useState(false);
@@ -43,7 +42,7 @@ const Post = ({post, isVisible}) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
         <View style={styles.postHeader}>
             <Image
                 style={styles.profileImage}
@@ -106,7 +105,7 @@ const Post = ({post, isVisible}) => {
         <Text style={{color: 'grey', marginTop: '2%', fontSize: 13}}>{post.createdAt}</Text>
     </View>
 
-    </SafeAreaView>
+    </View>
   )
 }
 
