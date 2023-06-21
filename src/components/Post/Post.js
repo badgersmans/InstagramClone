@@ -27,6 +27,12 @@ const Post = ({post, isVisible}) => {
     })
   }
 
+  const navigateToComments = () => {
+    navigation.navigate('Comments', {
+        postId: post.id,
+    })
+  }
+
   let content = null;
   if(post.image) {
     content = (
@@ -109,7 +115,7 @@ const Post = ({post, isVisible}) => {
         </Text>
         <Text style={styles.lessMoreText} onPress={() => setIsDescExpanded(!isDescExpanded)}>Read {isDescExpanded ? 'Less' : 'More'}</Text>
 
-        <Text style={{color: 'grey', marginTop: '2%'}}>View all {post.nofComments} comments</Text>
+        <Text style={{color: 'grey', marginTop: '2%'}} onPress={navigateToComments}>View all {post.nofComments} comments</Text>
         {post.comments.map(comment => (
             <Comment comment={comment} key={comment.id}/>
         ))}

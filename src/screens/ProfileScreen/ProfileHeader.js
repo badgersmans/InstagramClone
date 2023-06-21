@@ -3,15 +3,23 @@ import React, { useState } from 'react'
 import Button from '../../components/Button/Button'
 import styles from './styles'
 import { Image } from 'expo-image';
+import { useNavigation } from '@react-navigation/native';
 
 
 const ProfileHeader = ({user}) => {
     const blurhash =
 '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 const [isBioExpanded, setIsBioExpanded] = useState(false);
+const navigation = useNavigation();
+
 
   const toggleBio = () => {
     setIsBioExpanded(v => !v)
+  }
+  const navigateToEditProfile = () => {
+    navigation.navigate('Edit Profile', {
+        // userId: post.user.id,
+    })
   }
 
   return (
@@ -50,8 +58,8 @@ const [isBioExpanded, setIsBioExpanded] = useState(false);
         </View>
 
         <View style={styles.buttonContainer}>
-            <Button text={'Edit Profile'} onPress={() => console.log('pressed...')}/>
-            <Button text={'Another Button'} onPress={() => console.log('pressed2...')}/>
+            <Button text={'Edit Profile'} onPress={navigateToEditProfile} />
+            <Button text={'Another Button'} onPress={() => console.log('pressed2...')} />
         </View>
     </>
   )

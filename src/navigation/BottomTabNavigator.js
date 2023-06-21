@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import colors from '../theme/colors';
 import HomeStackNavigator from './HomeStackNavigator';
+import ProfileStackNavigator from './ProfileStackNavigator';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
@@ -45,10 +46,11 @@ const BottomTabNavigator = () => {
         />
         <Tab.Screen 
             name="MyProfile"
-            component={ProfileScreen}
+            component={ProfileStackNavigator}
             options={{
                 tabBarIcon: ({color, size}) => (<FontAwesome name="user-circle-o" size={size} color={color} />),
-                title: 'My Profile'
+                title: 'My Profile',
+                headerShown: false
             }}
         />
     </Tab.Navigator>
