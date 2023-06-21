@@ -1,6 +1,5 @@
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import PostUploadScreen from '../screens/PostUploadScreen/PostUploadScreen';
-import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import colors from '../theme/colors';
