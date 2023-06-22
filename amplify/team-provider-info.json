@@ -10,6 +10,11 @@
       "StackName": "amplify-instagramclone-staging-83826",
       "StackId": "arn:aws:cloudformation:us-east-1:234971053754:stack/amplify-instagramclone-staging-83826/fdfd8160-100e-11ee-8dba-0ae1e6af110f",
       "AmplifyAppId": "d2zqm8nt2o8vwb"
+    },
+    "categories": {
+      "auth": {
+        "instagramclone": {}
+      }
     }
   }
 }

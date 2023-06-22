@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomTabNavigator from './BottomTabNavigator';
 import CommentsScreen from '../screens/CommentsScreen/CommentsScreen';
 import * as Linking from 'expo-linking';
+import AuthStackNavigator from './AuthStackNavigator';
 
 
 const Stack = createNativeStackNavigator();
@@ -37,8 +38,9 @@ const Navigation = () => {
 
   return (
     <NavigationContainer theme={navTheme} linking={linking}>
-        <Stack.Navigator>
-            <Stack.Screen name='Home' component={BottomTabNavigator} options={{headerShown: false}}/>
+        <Stack.Navigator initialRouteName='Auth'>
+            <Stack.Screen name='Auth' component={AuthStackNavigator} options={{headerShown: false}}/>
+            <Stack.Screen name='Home' component={BottomTabNavigator} options={{headerShown: false}} />
             <Stack.Screen name='Comments' component={CommentsScreen} />
         </Stack.Navigator>
     </NavigationContainer>
