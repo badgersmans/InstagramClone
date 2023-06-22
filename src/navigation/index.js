@@ -4,6 +4,8 @@ import BottomTabNavigator from './BottomTabNavigator';
 import CommentsScreen from '../screens/CommentsScreen/CommentsScreen';
 import * as Linking from 'expo-linking';
 import AuthStackNavigator from './AuthStackNavigator';
+import { useMyAuthContext } from '../contexts/AuthContext';
+import { ActivityIndicator, View } from 'react-native';
 
 
 const Stack = createNativeStackNavigator();
@@ -16,6 +18,14 @@ const Stack = createNativeStackNavigator();
   };
 
 const Navigation = () => {
+  const {user} = useMyAuthContext();
+  if(user === undefined) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <ActivityIndicator />
+      </View>
+    )
+  }
   const linking = {
     prefixes: [Linking.createURL('/'), 'https://shawninstagramclone.com'],
     config: {
@@ -38,10 +48,17 @@ const Navigation = () => {
 
   return (
     <NavigationContainer theme={navTheme} linking={linking}>
-        <Stack.Navigator initialRouteName='Auth'>
+        <Stack.Navigator>
+        {
+          !user ? (
             <Stack.Screen name='Auth' component={AuthStackNavigator} options={{headerShown: false}}/>
-            <Stack.Screen name='Home' component={BottomTabNavigator} options={{headerShown: false}} />
-            <Stack.Screen name='Comments' component={CommentsScreen} />
+          ) : (
+            <>
+              <Stack.Screen name='Home' component={BottomTabNavigator} options={{headerShown: false}} />
+              <Stack.Screen name='Comments' component={CommentsScreen} />
+            </>
+          )
+        }
         </Stack.Navigator>
     </NavigationContainer>
   )

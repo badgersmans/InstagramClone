@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import { useState } from 'react'
 import Button from '../../components/Button/Button'
 import styles from './styles'
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
+import { Auth } from 'aws-amplify';
 
 
 const ProfileHeader = ({user}) => {
@@ -20,6 +21,14 @@ const navigation = useNavigation();
     navigation.navigate('Edit Profile', {
         // userId: post.user.id,
     })
+  }
+
+  const onLogout = async () => {
+    try {
+        await Auth.signOut();
+    } catch (error) {
+        Alert.alert('Error', error.message)
+    }
   }
 
   return (
@@ -59,7 +68,7 @@ const navigation = useNavigation();
 
         <View style={styles.buttonContainer}>
             <Button text={'Edit Profile'} onPress={navigateToEditProfile} />
-            <Button text={'Another Button'} onPress={() => console.log('pressed2...')} />
+            <Button text={'Log Out'} onPress={onLogout} />
         </View>
     </>
   )

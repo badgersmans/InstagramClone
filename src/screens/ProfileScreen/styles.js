@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginHorizontal: 20,
+        marginTop: 20,
         // backgroundColor: 'yellow'
     },
     statsContainer: {
