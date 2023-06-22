@@ -40,6 +40,8 @@ function CustomInput<ContentType>({
               placeholder={placeholder}
               style={styles.input}
               secureTextEntry={secureTextEntry}
+              autoCapitalize="none"
+              autoCorrect={false}
             />
           </View>
           {error && (

@@ -1,10 +1,12 @@
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import FormInput from '../components/FormInput';
 import CustomButton from '../components/CustomButton';
 import SocialSignInButtons from '../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
 import colors from '../../../theme/colors';
+import { Auth } from 'aws-amplify';
+import { useState } from 'react';
 
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/gi;
 const USERNAME_REGEX = /^[a-zA-Z0-9]+$/gi; // alphanumeric no symbols
@@ -18,12 +20,24 @@ type SignUpData = {
 };
 
 const SignUpScreen = () => {
-  const {control, handleSubmit, watch} = useForm<SignUpData>();
+  const {control, handleSubmit, watch, reset} = useForm<SignUpData>();
+  const [loading, setLoading] = useState(false);
   const pwd = watch('password');
   const navigation = useNavigation();
 
-  const onRegisterPressed = ({name, email, username, password}: SignUpData) => {
-    navigation.navigate('Confirm email', {username});
+  const onRegisterPressed = async ({name, email, username, password}: SignUpData) => {
+    if(loading) return;
+    setLoading(true);
+    try {
+      const response = await Auth.signUp({username, password, attributes: {name, email}});
+      console.log(response)
+      navigation.navigate('Confirm email', {username});
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    } finally {
+      setLoading(false);
+      reset();
+    }
   };
 
   const onSignInPress = () => {
@@ -49,13 +63,13 @@ const SignUpScreen = () => {
           placeholder="Full name"
           rules={{
             required: 'Name is required',
-            minLength: {
-              value: 3,
-              message: 'Name should be at least 3 characters long',
-            },
+            // minLength: {
+            //   value: 3,
+            //   message: 'Name should be at least 3 characters long',
+            // },
             maxLength: {
-              value: 24,
-              message: 'Name should be max 24 characters long',
+              value: 50,
+              message: 'Name should be max 50 characters long',
             },
           }}
         />
@@ -76,7 +90,7 @@ const SignUpScreen = () => {
             },
             pattern: {
               value: USERNAME_REGEX,
-              message: 'Username can only contain a-z, 0-9, _',
+              message: 'Usernames cannot have symbols',
             },
           }}
         />

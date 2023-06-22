@@ -1,10 +1,11 @@
-import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import { useState } from 'react';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import FormInput from '../components/FormInput';
 import CustomButton from '../components/CustomButton';
-import SocialSignInButtons from '../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
+import { Auth } from 'aws-amplify';
+import {useRoute} from '@react-navigation/native';
 
 type NewPasswordType = {
   username: string;
@@ -13,13 +14,29 @@ type NewPasswordType = {
 };
 
 const NewPasswordScreen = () => {
+  const route = useRoute();
   const {control, handleSubmit} = useForm<NewPasswordType>();
+  // const {control, handleSubmit} = useForm<NewPasswordType>({
+  //   defaultValues: {username: route.params.username},
+  // });
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
 
-  const onSubmitPressed = (data: NewPasswordType) => {
-    console.warn(data);
-    navigation.navigate('Sign in');
+  const onSubmitPressed = async ({code, password}: NewPasswordType) => {
+    if(loading) return;
+    setLoading(true);
+    try {
+      await Auth.forgotPasswordSubmit(route.params.username, code, password);
+      navigation.navigate('Sign in');
+      // Alert.alert('Check your email', `The code has been sent to ${response.CodeDeliveryDetails.Destination}`)
+      // console.log(response)
+    } catch (error) {
+      
+    } finally {
+      setLoading(false);
+    }
+    // console.warn(data);
   };
 
   const onSignInPress = () => {
@@ -31,12 +48,12 @@ const NewPasswordScreen = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Reset your password</Text>
 
-        <FormInput
+        {/* <FormInput
           placeholder="Username"
           name="username"
           control={control}
           rules={{required: 'Username is required'}}
-        />
+        /> */}
 
         <FormInput
           placeholder="Code"
@@ -59,7 +76,7 @@ const NewPasswordScreen = () => {
           }}
         />
 
-        <CustomButton text="Submit" onPress={handleSubmit(onSubmitPressed)} />
+        <CustomButton text={loading ? 'Resetting...' : 'Reset Password'} onPress={handleSubmit(onSubmitPressed)} />
 
         <CustomButton
           text="Back to Sign in"
