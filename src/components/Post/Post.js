@@ -76,13 +76,14 @@ const Post = ({post, isVisible}) => {
 
     <View style={styles.footer}>
         <View style={styles.iconContainer}>
+            <Pressable onPress={toggleLike}>
                 <AntDesign
                     name={like ? `heart` : 'hearto'}
                     size={24}
                     style={styles.icon}
                     color={like ? '#ED4956' : 'black'}
-                    onPress={() => setLike(!like)}
                 />
+            </Pressable>
                 <Ionicons
                     name="chatbubble-outline"
                     size={24}
