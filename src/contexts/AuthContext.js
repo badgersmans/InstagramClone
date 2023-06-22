@@ -2,21 +2,23 @@ import { Auth, Hub } from 'aws-amplify';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext({
-    user: undefined,
-    setUser: () => {}
+    user: undefined
 });
 
+
 const AuthContextProvider = ({children}) => {
+    const [user, setUser] = useState(undefined);
+
+    const checkUser = async () => {
+        try {
+            const authUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+            setUser(authUser);
+        } catch (error) {
+            setUser(null);
+        }
+    };
 
     useEffect(() => {
-        const checkUser = async () => {
-            try {
-                const authUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
-                setUser(authUser);
-            } catch (error) {
-                setUser(null);
-            }
-        };
         checkUser();
     }, []);
 
@@ -24,16 +26,16 @@ const AuthContextProvider = ({children}) => {
         const listener = (data) => {
             const { event } = data.payload;
             if(event === 'signOut') setUser(null);
+            if(event === 'signIn') checkUser();
             // console.log(data)
-        }
+        } 
         const result = Hub.listen('auth', listener);
         return () => result
     }, [])
-    const [user, setUser] = useState(undefined);
     // console.log(`user is?`, user)
 
     return (
-        <AuthContext.Provider value={{user, setUser}}>
+        <AuthContext.Provider value={{user}}>
             {children}
         </AuthContext.Provider>
     )
