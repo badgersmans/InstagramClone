@@ -8,6 +8,7 @@ import DoublePressable from '../DoublePressable/DoublePressable';
 import Carousel from '../Carousel/Carousel';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import { useNavigation } from '@react-navigation/native';
+import { DEFAULT_USER_IMAGE } from '../../config';
 
 
 const Post = ({post, isVisible}) => {
@@ -16,15 +17,17 @@ const Post = ({post, isVisible}) => {
     const [like, setLike] = useState(false)
     const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
-// console.log(isVisible)
+// console.log(post.images)
   const toggleLike = () => {
     setLike((v) => !v)
   }
 
   const navigateToUser = () => {
-    navigation.navigate('UserProfile', {
-        userId: post.user.id,
-    })
+    if(post.User) {
+        navigation.navigate('UserProfile', {
+            userId: post.User.id,
+        })
+    }
   }
 
   const navigateToComments = () => {
@@ -62,12 +65,12 @@ const Post = ({post, isVisible}) => {
             <Pressable style={styles.photoNameContainer} onPress={navigateToUser}>
                 <Image
                     style={styles.profileImage}
-                    source={post.user.image}
+                    source={post.User?.image || DEFAULT_USER_IMAGE}
                     placeholder={blurhash}
                     contentFit="cover"
                     transition={300}
                 />
-                <Text style={styles.name}>{post.user.username}</Text>
+                <Text style={styles.name}>{post.User.username}</Text>
             </Pressable>
             <MaterialCommunityIcons name="dots-horizontal" style={styles.dotIcon}/>
         </View>
@@ -106,18 +109,18 @@ const Post = ({post, isVisible}) => {
 
         <Text>
             Liked by 
-            <Text style={{fontWeight: 'bold'}}> {post.user.username} </Text>
+            <Text style={{fontWeight: 'bold'}}> {post.User?.username} </Text>
             and 
             <Text style={{fontWeight: 'bold'}}> {post.nofLikes} others </Text>
         </Text>
 
-        <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}} numberOfLines={isDescExpanded ? null : 2}>{post.user.username}
+        <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}} numberOfLines={isDescExpanded ? null : 2}>{post.User?.username}
             <Text style={{fontWeight: 'normal'}}> {post.description}</Text>
         </Text>
         <Text style={styles.lessMoreText} onPress={() => setIsDescExpanded(!isDescExpanded)}>Read {isDescExpanded ? 'Less' : 'More'}</Text>
 
         <Text style={{color: 'grey', marginTop: '2%'}} onPress={navigateToComments}>View all {post.nofComments} comments</Text>
-        {post.comments.map(comment => (
+        {(post.Comments?.items || []).map(comment => (
             <Comment comment={comment} key={comment.id}/>
         ))}
         <Text style={{color: 'grey', marginTop: '2%', fontSize: 13}}>{post.createdAt}</Text>

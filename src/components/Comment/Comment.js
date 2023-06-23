@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
 import { Image } from 'expo-image';
+import { DEFAULT_USER_IMAGE } from '../../config';
 
 const Comment = ({ comment, includeDetails = false, margin = '2%' }) => {
   const [isCommentExpanded, setIsCommentExpanded] = useState(false);
@@ -32,7 +33,7 @@ const Comment = ({ comment, includeDetails = false, margin = '2%' }) => {
       {includeDetails && (
         <Image
           style={styles.avatar}
-          source={comment.user.image}
+          source={comment.User?.image || DEFAULT_USER_IMAGE}
           placeholder={blurhash}
           contentFit="cover"
           transition={300}

@@ -5,6 +5,7 @@ import styles from './styles'
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
+import { DEFAULT_USER_IMAGE } from '../../config';
 
 
 const ProfileHeader = ({user}) => {
@@ -36,7 +37,7 @@ const navigation = useNavigation();
         <View style={styles.headerContainer}>
             <Image
             style={styles.avatar}
-            source={user.image}
+            source={user.image || DEFAULT_USER_IMAGE}
             placeholder={blurhash}
             contentFit="contain"
             transition={300}
