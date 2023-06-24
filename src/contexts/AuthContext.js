@@ -12,6 +12,8 @@ const AuthContextProvider = ({children}) => {
     const checkUser = async () => {
         try {
             const authUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+            //  console.log(authUser)
+            // setUser(authUser);
             setUser(authUser);
         } catch (error) {
             setUser(null);
@@ -35,7 +37,7 @@ const AuthContextProvider = ({children}) => {
     // console.log(`user is?`, user)
 
     return (
-        <AuthContext.Provider value={{user}}>
+        <AuthContext.Provider value={{user, userId: user?.attributes?.sub}}>
             {children}
         </AuthContext.Provider>
     )

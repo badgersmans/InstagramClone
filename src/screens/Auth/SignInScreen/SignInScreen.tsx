@@ -36,7 +36,7 @@ const SignInScreen = () => {
       if(error.name === 'UserNotConfirmedException') {
         navigation.navigate('Confirm email', {username})
       } else {
-        Alert.alert('Error', error.message)
+        Alert.alert('Error', 'Try again')
       }
     } finally {
       setLoading(false)

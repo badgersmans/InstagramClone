@@ -135,16 +135,17 @@ type EagerUser = {
   };
   readonly id: string;
   readonly name: string;
-  readonly image?: string | null;
+  readonly username: string;
+  readonly email: string;
   readonly bio?: string | null;
-  readonly username?: string | null;
-  readonly website?: string | null;
+  readonly image?: string | null;
   readonly nofPosts?: number | null;
   readonly nofFollowers?: number | null;
   readonly nofFollowings?: number | null;
   readonly Posts?: (Post | null)[] | null;
   readonly Comments?: (Comment | null)[] | null;
   readonly Likes?: (Like | null)[] | null;
+  readonly website?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -156,16 +157,17 @@ type LazyUser = {
   };
   readonly id: string;
   readonly name: string;
-  readonly image?: string | null;
+  readonly username: string;
+  readonly email: string;
   readonly bio?: string | null;
-  readonly username?: string | null;
-  readonly website?: string | null;
+  readonly image?: string | null;
   readonly nofPosts?: number | null;
   readonly nofFollowers?: number | null;
   readonly nofFollowings?: number | null;
   readonly Posts: AsyncCollection<Post>;
   readonly Comments: AsyncCollection<Comment>;
   readonly Likes: AsyncCollection<Like>;
+  readonly website?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

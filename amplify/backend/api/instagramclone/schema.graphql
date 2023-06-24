@@ -35,15 +35,16 @@ type Post @model @auth(rules: [{allow: public}]) {
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
-  image: String
+  username: String!
+  email: AWSEmail!
   bio: String
-  username: String
-  website: String
+  image: String
   nofPosts: Int
   nofFollowers: Int
   nofFollowings: Int
   Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
   Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
   Likes: [Like] @hasMany(indexName: "byUser", fields: ["id"])
+  website: String
 }
  

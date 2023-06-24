@@ -1,5 +1,5 @@
 import Post from '../../components/Post/Post';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { ActivityIndicator, FlatList } from 'react-native';
 import {useQuery} from '@apollo/client'
 import { listPosts } from './queries';
@@ -7,7 +7,7 @@ import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
 
 const HomeScreen = () => {
   const [activePostId, setActivePostId] = useState(null);
-  const {data, loading, error} = useQuery(listPosts, {variables: { limit: 0 }});
+  const {data, loading, error, refetch} = useQuery(listPosts, {variables: {}});
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
     // console.log(data)
@@ -39,6 +39,8 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged.current}
         viewabilityConfig={viewabilityConfig}
+        onRefresh={refetch}
+        refreshing={loading}
       />
   )
 }

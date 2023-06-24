@@ -14,7 +14,9 @@ import { DEFAULT_USER_IMAGE } from '../../config';
 const Post = ({post, isVisible}) => {
     const navigation = useNavigation();
     const [isDescExpanded, setIsDescExpanded] = useState(false);
-    const [like, setLike] = useState(false)
+    const [like, setLike] = useState(false);
+    const DESCRIPTION_BREAKPOINT = 1400;
+
     const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 // console.log(post.images)
@@ -34,6 +36,10 @@ const Post = ({post, isVisible}) => {
     navigation.navigate('Comments', {
         postId: post.id,
     })
+  }
+
+  const toggleDescription = () => {
+    setIsDescExpanded(v => !v)
   }
 
   let content = null;
@@ -117,7 +123,11 @@ const Post = ({post, isVisible}) => {
         <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}} numberOfLines={isDescExpanded ? null : 2}>{post.User?.username}
             <Text style={{fontWeight: 'normal'}}> {post.description}</Text>
         </Text>
-        <Text style={styles.lessMoreText} onPress={() => setIsDescExpanded(!isDescExpanded)}>Read {isDescExpanded ? 'Less' : 'More'}</Text>
+        {post.description.length >= DESCRIPTION_BREAKPOINT && (
+              <Pressable onPress={toggleDescription}>
+                <Text style={styles.lessMoreText} >Read {isDescExpanded ? 'Less' : 'More'}</Text>
+              </Pressable>
+        )}
 
         <Text style={{color: 'grey', marginTop: '2%'}} onPress={navigateToComments}>View all {post.nofComments} comments</Text>
         {(post.Comments?.items || []).map(comment => (
@@ -129,5 +139,6 @@ const Post = ({post, isVisible}) => {
     </View>
   )
 }
+
 
 export default Post

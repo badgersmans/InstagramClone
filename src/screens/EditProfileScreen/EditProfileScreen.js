@@ -1,10 +1,16 @@
-import { View, Text, TextInput } from 'react-native'
-import { useState } from 'react'
+import { View, Text, TextInput, Pressable, ActivityIndicator, Alert } from 'react-native'
+import { useEffect, useState } from 'react'
 import styles from './styles'
-import user from '../../../assets/data/user.json'
 import { useForm, Controller } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
 import Image from '../../components/Image'
+import {useQuery, useMutation} from '@apollo/client'
+import { deleteUser, getUser, updateUser } from './queries';
+import { useMyAuthContext } from '../../contexts/AuthContext'
+import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage'
+import { useNavigation } from '@react-navigation/native';
+import colors from '../../theme/colors';
+import { Auth } from 'aws-amplify';
 
 const URL_REGEX = /^(?!mailto:)(?:(?:http|https|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?:(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[0-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))|localhost)(?::\d{2,5})?(?:(\/|\?|#)[^\s]*)?$/gi;
 const USERNAME_REGEX = /^[a-zA-Z0-9]+$/gi;
@@ -48,17 +54,71 @@ const Input = ({placeholder = '', multiline = false, control, name, rules = {}})
 
 const EditProfileScreen = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const { control, handleSubmit, formState: {errors} } = useForm({
-    defaultValues: {
-      name: user.name,
-      username: user.username,
-      website: user.website,
-      bio: user.bio
-    }
-  });
+  const { control, handleSubmit, formState: {errors}, setValue } = useForm();
+  const {userId: authUserId, user: authUser} = useMyAuthContext();
+  const {data, loading, error} = useQuery(getUser, {variables: { id: authUserId }});
+  const [runUpdateUser, { loading: updateLoading, error: updateError }] = useMutation(updateUser, {variables: {  }});
+  const [runDelete, { loading: deleteLoading, error: deleteError }] = useMutation(deleteUser);
+  const user = data?.getUser;
+  const navigation = useNavigation();
+  // console.log(user)
 
-  const onSubmit = (data) => {
-    // console.log(data)
+  useEffect(() => {
+    if(user) {
+      setValue('name', user.name);
+      setValue('username', user.username);
+      setValue('website', user.website);
+      setValue('bio', user.bio);
+    }
+  }, [user, setValue])
+
+
+  const onSubmit = (formData) => {
+    runUpdateUser({
+      variables: {
+        input: {
+          id: authUserId,
+          ...formData,
+          _version: user._version
+        }
+      }
+    });
+    navigation.goBack();
+  }
+
+  const onDeleteAccount = () => {
+    Alert.alert('Are You Sure?', 'Deleting your account is permanent', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Yes, Delete',
+        style: 'destructive',
+        onPress: actuallyDelete
+      }
+    ])
+  };
+
+  const actuallyDelete = async () => {
+    if(!user) return;
+    console.log(user._version)
+
+    // delete from dynamo db
+    await runDelete({
+      variables: {
+        input: { id: authUserId },
+        _version: user._version
+      }
+    });
+
+    // delete from cognito
+    await authUser.deleteUser(error => {
+      if(error) {
+        console.log(error)
+      }
+      Auth.signOut();
+    })
   }
 
   const onChangePhoto = async () => {
@@ -79,11 +139,20 @@ const EditProfileScreen = () => {
   }
   // console.log(errors)
 
+  if(loading) {
+    return <ActivityIndicator />;
+  }
+  if(error || updateError || deleteError) {
+    return <ApiErrorMessage title='Error loading profile' message={error?.message || updateError?.message || deleteError?.message}/>
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
         <Image style={styles.avatar} source={selectedImage?.uri || user.image} />
-        <Text style={styles.textButton} onPress={onChangePhoto}>Change profile photo</Text>
+        <Pressable onPress={onChangePhoto}>
+          <Text style={styles.textProfileButton}>Change profile photo</Text>
+        </Pressable>
       </View>
 
       <Input 
@@ -139,8 +208,13 @@ const EditProfileScreen = () => {
           }
         }
       />
+      <Pressable onPress={handleSubmit(onSubmit)}>
+        <Text style={styles.textButton}>{updateLoading ? 'Updating...' : 'Update'}</Text>
+      </Pressable>
 
-      <Text style={styles.textButton} onPress={handleSubmit(onSubmit)}>Submit</Text>
+      <Pressable onPress={onDeleteAccount}>
+        <Text style={[styles.textButton, {color: colors.error}]}>{deleteLoading ? 'Deleting Account...' : 'Delete Account'}</Text>
+      </Pressable>
     </View>
   )
 }

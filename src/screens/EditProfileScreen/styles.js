@@ -44,7 +44,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.primary,
         fontSize: 16,
-        fontWeight: '500'
+        fontWeight: '500',
+        marginBottom: 20
+    },
+    textProfileButton: {
+        textAlign: 'center',
+        color: colors.primary,
+        fontSize: 16,
+        fontWeight: '500',
     },
     inputAndErrorContainer: {
         flex: 1,

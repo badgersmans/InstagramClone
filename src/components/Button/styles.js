@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
         borderColor: '#DCDCDC',
         borderRadius: 7,
         margin: 10
+    },
+    text: {
+        fontWeight: '500'
     }
 });
 

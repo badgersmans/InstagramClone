@@ -10,7 +10,7 @@ const ListGridItem = ({post}) => {
         <View style={{flex: 1, aspectRatio: 1, maxWidth: '33.33%' }}>
             <Image
                 style={{flex: 1}}
-                source={post.image || post.images[0]}
+                source={post.image || post.images?.[0]}
                 placeholder={blurhash}
                 contentFit="cover"
                 transition={300}
