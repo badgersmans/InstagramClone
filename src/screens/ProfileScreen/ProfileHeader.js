@@ -68,8 +68,8 @@ const navigation = useNavigation();
         </View>
 
         <View style={styles.buttonContainer}>
-            <Button text={'Edit Profile'} onPress={navigateToEditProfile} />
-            <Button text={'Log Out'} onPress={onLogout} />
+            <Button text={'Edit Profile'} onPress={navigateToEditProfile} inline/>
+            <Button text={'Log Out'} onPress={onLogout} inline/>
         </View>
     </>
   )
