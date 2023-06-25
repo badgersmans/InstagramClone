@@ -1,62 +1,28 @@
-import { View, Text, TextInput, Pressable, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, Pressable, ActivityIndicator, Alert } from 'react-native'
 import { useEffect, useState } from 'react'
 import styles from './styles'
-import { useForm, Controller } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import * as ImagePicker from 'expo-image-picker';
 import Image from '../../components/Image'
-import {useQuery, useMutation} from '@apollo/client'
-import { deleteUser, getUser, updateUser } from './queries';
+import {useQuery, useLazyQuery, useMutation} from '@apollo/client'
+import { deleteUser, getUser, updateUser, usersByUsername } from './queries';
 import { useMyAuthContext } from '../../contexts/AuthContext'
 import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage'
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../theme/colors';
 import { Auth } from 'aws-amplify';
+import Input from './Input';
+import { DEFAULT_USER_IMAGE } from '../../config';
 
 const URL_REGEX = /^(?!mailto:)(?:(?:http|https|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?:(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[0-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))|localhost)(?::\d{2,5})?(?:(\/|\?|#)[^\s]*)?$/gi;
 const USERNAME_REGEX = /^[a-zA-Z0-9]+$/gi;
-
-const Input = ({placeholder = '', multiline = false, control, name, rules = {}}) => {
-
-  return (
-    <Controller 
-      control={control}
-      name={name}
-      render={(
-        {field: { onChange, value, onBlur }, 
-        fieldState: { error }}) => {
-          // console.log(`field error: ${JSON.stringify(error)}`)
-          return (
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>{placeholder}</Text>
-              <View style={styles.inputAndErrorContainer}>
-                <TextInput 
-                  placeholder={placeholder}
-                  style={[styles.input, { borderColor: error ? 'red' : 'lightgrey' }]}
-                  value={value}
-                  onChangeText={onChange}
-                  multiline={multiline}
-                  onBlur={onBlur}
-                  autoCapitalize='none'
-                  autoComplete='off'
-                />
-                {error && <Text style={styles.errorText}>{error.message || 'error'}</Text>}
-
-              </View>
-
-            </View>
-        )}
-      }
-      rules={rules}
-    />
-  )
-
-}
 
 const EditProfileScreen = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { control, handleSubmit, formState: {errors}, setValue } = useForm();
   const {userId: authUserId, user: authUser} = useMyAuthContext();
   const {data, loading, error} = useQuery(getUser, {variables: { id: authUserId }});
+  const [getUsersByUsername] = useLazyQuery(usersByUsername, {variables: {  }});
   const [runUpdateUser, { loading: updateLoading, error: updateError }] = useMutation(updateUser, {variables: {  }});
   const [runDelete, { loading: deleteLoading, error: deleteError }] = useMutation(deleteUser);
   const user = data?.getUser;
@@ -83,7 +49,9 @@ const EditProfileScreen = () => {
         }
       }
     });
-    navigation.goBack();
+    if(navigation.canGoBack()) {
+      navigation.goBack();
+    }
   }
 
   const onDeleteAccount = () => {
@@ -137,6 +105,28 @@ const EditProfileScreen = () => {
       }
     
   }
+
+  const validateUsername = async (username) => {
+    try {
+      const response = await getUsersByUsername({
+        variables: {
+          username
+        }
+      });
+      // console.log(response)
+      if(response.error) {
+        Alert.alert(`Failed to find username`);
+        return `Failed to find username`
+      }
+      const user = response.data?.usersByUsername.items;
+      if(user && user?.length > 0 && user[0].id !== authUserId) {
+        return `Username is already taken`;
+      }
+    } catch (error) {
+      Alert.alert(`Failed to find username`);
+    }
+    return true;
+  }
   // console.log(errors)
 
   if(loading) {
@@ -149,19 +139,19 @@ const EditProfileScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-        <Image style={styles.avatar} source={selectedImage?.uri || user.image} />
+        <Image style={styles.avatar} source={selectedImage?.uri || user?.image || DEFAULT_USER_IMAGE} />
         <Pressable onPress={onChangePhoto}>
           <Text style={styles.textProfileButton}>Change profile photo</Text>
         </Pressable>
       </View>
 
-      <Input 
+      <Input
         placeholder='Name' 
         control={control} 
         name="name" 
         rules={{required: "Name is required"}}
       />
-      <Input 
+      <Input
         placeholder='Username' 
         control={control} 
         name="username" 
@@ -175,11 +165,12 @@ const EditProfileScreen = () => {
             pattern: {
               value: USERNAME_REGEX,
               message: 'Usernames cannot have symbols'
-            }
+            },
+            validate: validateUsername,
           }
         }
       />
-      <Input 
+      <Input
         placeholder='Website' 
         control={control} 
         name="website" 
@@ -193,7 +184,7 @@ const EditProfileScreen = () => {
           }
         }
       />
-      <Input 
+      <Input
         placeholder='Bio' 
         control={control} 
         name="bio" 

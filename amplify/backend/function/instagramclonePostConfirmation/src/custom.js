@@ -64,7 +64,7 @@ exports.handler = async (event, context) => {
     nofPosts: 0,
     nofFollowers: 0,
     nofFollowings: 0,
-    username: ''
+    // username: ''
   }
 
   // check if user already exists

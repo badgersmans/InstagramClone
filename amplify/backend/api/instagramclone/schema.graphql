@@ -35,7 +35,7 @@ type Post @model @auth(rules: [{allow: public}]) {
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
-  username: String!
+  username: String @index(name: "usersByUsername", queryField: "usersByUsername")
   email: AWSEmail!
   bio: String
   image: String

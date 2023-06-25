@@ -135,7 +135,7 @@ type EagerUser = {
   };
   readonly id: string;
   readonly name: string;
-  readonly username: string;
+  readonly username?: string | null;
   readonly email: string;
   readonly bio?: string | null;
   readonly image?: string | null;
@@ -157,7 +157,7 @@ type LazyUser = {
   };
   readonly id: string;
   readonly name: string;
-  readonly username: string;
+  readonly username?: string | null;
   readonly email: string;
   readonly bio?: string | null;
   readonly image?: string | null;

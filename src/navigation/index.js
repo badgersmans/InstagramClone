@@ -6,6 +6,9 @@ import * as Linking from 'expo-linking';
 import AuthStackNavigator from './AuthStackNavigator';
 import { useMyAuthContext } from '../contexts/AuthContext';
 import { ActivityIndicator, View } from 'react-native';
+import {useQuery} from '@apollo/client'
+import { getUser } from './queries';
+import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -18,8 +21,11 @@ const Stack = createNativeStackNavigator();
   };
 
 const Navigation = () => {
-  const {user} = useMyAuthContext();
-  if(user === undefined) {
+  const {user, userId} = useMyAuthContext();
+  const {data, loading, error} = useQuery(getUser, {variables: { id: userId }});
+  const userData = data?.getUser;
+  console.log(userData)
+  if(user === undefined || loading) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <ActivityIndicator />
@@ -46,19 +52,28 @@ const Navigation = () => {
     }
   }
 
+  let stackScreens = null;
+  if(!user) {
+    stackScreens = (
+      <Stack.Screen name='Auth' component={AuthStackNavigator} options={{headerShown: false}}/>
+    )
+  } else if(!userData?.username) {
+    stackScreens = (
+    <Stack.Screen name='Edit Profile' component={EditProfileScreen} options={{ title: 'Finish Your Profile' }}/>
+    )
+  } else {
+    stackScreens = (
+      <>
+        <Stack.Screen name='Home' component={BottomTabNavigator} options={{headerShown: false}} />
+        <Stack.Screen name='Comments' component={CommentsScreen} />
+      </>
+    )
+  }
+
   return (
     <NavigationContainer theme={navTheme} linking={linking}>
         <Stack.Navigator>
-        {
-          !user ? (
-            <Stack.Screen name='Auth' component={AuthStackNavigator} options={{headerShown: false}}/>
-          ) : (
-            <>
-              <Stack.Screen name='Home' component={BottomTabNavigator} options={{headerShown: false}} />
-              <Stack.Screen name='Comments' component={CommentsScreen} />
-            </>
-          )
-        }
+          {stackScreens}
         </Stack.Navigator>
     </NavigationContainer>
   )

@@ -16,6 +16,9 @@ const [isBioExpanded, setIsBioExpanded] = useState(false);
 const navigation = useNavigation();
 const BIO_BREAKPOINT = 160;
 const {userId: authUserId} = useMyAuthContext();
+navigation.setOptions({
+    title: user?.username || Profile
+})
 
   const toggleBio = () => {
     setIsBioExpanded(v => !v)
