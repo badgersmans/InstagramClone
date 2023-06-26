@@ -2,13 +2,14 @@ import { View, Text, Image as RNImage, Pressable } from 'react-native'
 import { useState } from 'react'
 import styles from './styles'
 import { Image } from 'expo-image';
-import { MaterialCommunityIcons, AntDesign, Ionicons, Feather } from '@expo/vector-icons';
+import { AntDesign, Ionicons, Feather } from '@expo/vector-icons';
 import Comment from '../Comment';
 import DoublePressable from '../DoublePressable/DoublePressable';
 import Carousel from '../Carousel/Carousel';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import { useNavigation } from '@react-navigation/native';
 import { DEFAULT_USER_IMAGE } from '../../config';
+import PostMenu from './PostMenu';
 
 
 const Post = ({post, isVisible}) => {
@@ -67,6 +68,7 @@ const Post = ({post, isVisible}) => {
 
   return (
     <View style={styles.container}>
+
         <View style={styles.postHeader}>
             <Pressable style={styles.photoNameContainer} onPress={navigateToUser}>
                 <Image
@@ -78,7 +80,7 @@ const Post = ({post, isVisible}) => {
                 />
                 <Text style={styles.name}>{post.User.username}</Text>
             </Pressable>
-            <MaterialCommunityIcons name="dots-horizontal" style={styles.dotIcon}/>
+            <PostMenu post={post}/>
         </View>
 
         {content}

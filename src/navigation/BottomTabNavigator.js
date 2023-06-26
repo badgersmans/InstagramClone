@@ -1,10 +1,11 @@
-import PostUploadScreen from '../screens/PostUploadScreen/PostUploadScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import colors from '../theme/colors';
 import HomeStackNavigator from './HomeStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import SearchTabNavigator from './SearchTabNavigator';
+import CameraScreen from '../screens/CameraScreen';
+import UploadStackNavigator from './UploadStackNavigator';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
@@ -31,7 +32,7 @@ const BottomTabNavigator = () => {
         />
         <Tab.Screen 
             name="Upload"
-            component={PostUploadScreen}
+            component={UploadStackNavigator}
             options={{
                 tabBarIcon: ({color, size}) => (<MaterialCommunityIcons name="plus-circle-outline" size={size} color={color}/>),
                 headerShown: false
@@ -39,7 +40,7 @@ const BottomTabNavigator = () => {
         />
         <Tab.Screen 
             name="Notifications"
-            component={PostUploadScreen}
+            component={CameraScreen}
             options={{
                 tabBarIcon: ({color, size}) => (<MaterialCommunityIcons name="heart-outline" size={size} color={color}/>)
             }}

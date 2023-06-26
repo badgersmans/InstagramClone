@@ -27,9 +27,9 @@ const HomeScreen = () => {
   if(error) {
     return <ApiErrorMessage title='Error loading posts' message={error.message} />
   }
-  const posts = data.listPosts.items;
+  const posts = (data.listPosts.items).filter(post => !post._deleted);
 
-  console.log(data)
+  // console.log(data)
 
   return (
       <FlatList

@@ -17,7 +17,7 @@ const navigation = useNavigation();
 const BIO_BREAKPOINT = 160;
 const {userId: authUserId} = useMyAuthContext();
 navigation.setOptions({
-    title: user?.username || Profile
+    title: user?.username || 'Profile'
 })
 
   const toggleBio = () => {

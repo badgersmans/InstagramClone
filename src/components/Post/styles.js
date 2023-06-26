@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     dotIcon: {
-        fontSize: 24,
-        color: 'black',
+        // fontSize: 24,
+        // color: 'black',
         position: 'absolute',
         right: 20
         // marginLeft: 'auto'
@@ -60,6 +60,11 @@ const styles = StyleSheet.create({
     },
     lessMoreText: {
         color: 'grey'
+    },
+    optionText: {
+        // textAlign: 'center',
+        fontSize: 16,
+        padding: 5,
     }
 });
 

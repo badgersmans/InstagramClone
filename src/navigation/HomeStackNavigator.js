@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import logo from '../../assets/images/signature.png'
+import EditPostScreen from '../screens/EditPostScreen/EditPostScreen';
 
 const HeaderTitle = () => {
     return (
@@ -26,6 +27,14 @@ const Stack = createNativeStackNavigator();
             component={ProfileScreen}
             options={{
                 title: 'Profile'
+            }}
+        />
+
+        <Stack.Screen 
+            name="EditPost"
+            component={EditPostScreen}
+            options={{
+                title: 'Update Post'
             }}
         />
     </Stack.Navigator>

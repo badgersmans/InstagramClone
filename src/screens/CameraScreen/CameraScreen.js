@@ -4,8 +4,10 @@ import styles from './styles'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import {Camera, CameraType, FlashMode, VideoQuality} from "expo-camera";
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const PostUploadScreen = () => {
+
+const CameraScreen = () => {
     const [cameraType, setCameraType] = useState(CameraType.back);
     const [isCameraReady, setIsCameraReady] = useState(false);
     const [isRecording, setIsRecording] = useState(false)
@@ -14,6 +16,7 @@ const PostUploadScreen = () => {
     // console.log(permission)
     const insets = useSafeAreaInsets();
     const camera = useRef(null);
+    const navigation = useNavigation();
 
     const flashModes = [
         FlashMode.off,
@@ -88,6 +91,12 @@ const PostUploadScreen = () => {
             setIsRecording(false)
         }
     }
+
+    const navigateToCreateScreen = () => {
+        navigation.navigate('Create', {
+            images: ["https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg", "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/2.jpg"]
+        })
+    }
     // console.log(flash)
 
     // if (!permission?.granted) {
@@ -113,9 +122,10 @@ const PostUploadScreen = () => {
             <MaterialIcons name="photo-library" size={30} color="white" />
             {isCameraReady && <Pressable style={[styles.shutterCircle, {backgroundColor: isRecording ? 'red' : 'white'}]} onPress={takePicture} onLongPress={startVideo} onPressOut={stopVideo}/>}
             <MaterialIcons name="flip-camera-ios" size={30} color="white" onPress={flipCamera}/>
+            <MaterialIcons name="arrow-forward-ios" size={30} color="white" onPress={navigateToCreateScreen}/>
       </View>
     </View>
   )
 }
 
-export default PostUploadScreen
+export default CameraScreen
