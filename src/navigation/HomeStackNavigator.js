@@ -4,6 +4,7 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import logo from '../../assets/images/signature.png'
 import EditPostScreen from '../screens/EditPostScreen/EditPostScreen';
+import PostLikesScreen from '../screens/PostLikesScreen/PostLikesScreen';
 
 const HeaderTitle = () => {
     return (
@@ -37,6 +38,12 @@ const Stack = createNativeStackNavigator();
                 title: 'Update Post'
             }}
         />
+        <Stack.Screen
+            name='PostLikes'
+            component={PostLikesScreen}
+            options={{title: 'Post Likes'}}
+        />
+
     </Stack.Navigator>
   )
 };

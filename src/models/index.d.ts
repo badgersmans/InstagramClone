@@ -14,7 +14,7 @@ type EagerLike = {
   readonly id: string;
   readonly userID: string;
   readonly postID: string;
-  readonly commentID: string;
+  readonly commentID?: string | null;
   readonly Post?: Post | null;
   readonly User?: User | null;
   readonly Comment?: Comment | null;
@@ -30,7 +30,7 @@ type LazyLike = {
   readonly id: string;
   readonly userID: string;
   readonly postID: string;
-  readonly commentID: string;
+  readonly commentID?: string | null;
   readonly Post: AsyncItem<Post | undefined>;
   readonly User: AsyncItem<User | undefined>;
   readonly Comment: AsyncItem<Comment | undefined>;

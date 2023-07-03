@@ -28,7 +28,7 @@ export const schema = {
                     "name": "commentID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "Post": {
@@ -113,8 +113,10 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "name": "byPost",
+                        "queryField": "likesForPostByUser",
                         "fields": [
-                            "postID"
+                            "postID",
+                            "userID"
                         ]
                     }
                 },
@@ -617,5 +619,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "08bddb5146feae0f53d950e6b0c2951c"
+    "version": "72eedcf8a223b196d75522bbfcae75fc"
 };

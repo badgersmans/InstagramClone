@@ -10,20 +10,17 @@ import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import { useNavigation } from '@react-navigation/native';
 import { DEFAULT_USER_IMAGE } from '../../config';
 import PostMenu from './PostMenu';
-
+import useLikeService from '../../services/LikeService';
 
 const Post = ({post, isVisible}) => {
+    const { toggleLike, isLiked} = useLikeService(post);
     const navigation = useNavigation();
     const [isDescExpanded, setIsDescExpanded] = useState(false);
-    const [like, setLike] = useState(false);
     const DESCRIPTION_BREAKPOINT = 1400;
-
+    const postLikes = post.Likes?.items.filter(like => !like._deleted) || [];
     const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 // console.log(post.images)
-  const toggleLike = () => {
-    setLike((v) => !v)
-  }
 
   const navigateToUser = () => {
     if(post.User) {
@@ -35,6 +32,12 @@ const Post = ({post, isVisible}) => {
 
   const navigateToComments = () => {
     navigation.navigate('Comments', {
+        postId: post.id,
+    })
+  }
+
+  const navigateToLikesPage = () => {
+    navigation.navigate('PostLikes', {
         postId: post.id,
     })
   }
@@ -68,7 +71,6 @@ const Post = ({post, isVisible}) => {
 
   return (
     <View style={styles.container}>
-
         <View style={styles.postHeader}>
             <Pressable style={styles.photoNameContainer} onPress={navigateToUser}>
                 <Image
@@ -82,65 +84,69 @@ const Post = ({post, isVisible}) => {
             </Pressable>
             <PostMenu post={post}/>
         </View>
-
         {content}
+        <View style={styles.footer}>
+            <View style={styles.iconContainer}>
+                <Pressable onPress={toggleLike}>
+                    <AntDesign
+                        name={isLiked ? `heart` : 'hearto'}
+                        size={24}
+                        style={styles.icon}
+                        color={isLiked ? '#ED4956' : 'black'}
+                    />
+                </Pressable>
+                    <Ionicons
+                        name="chatbubble-outline"
+                        size={24}
+                        style={styles.icon}
+                        color={'black'}
+                    />
+                    <Feather
+                        name="send"
+                        size={24}
+                        style={styles.icon}
+                        color={'black'}
+                    />
+                    <Feather
+                        name="bookmark"
+                        size={24}
+                        style={{marginLeft: 'auto'}}
+                        color={'black'}
+                    />
+            </View>
 
-    <View style={styles.footer}>
-        <View style={styles.iconContainer}>
-            <Pressable onPress={toggleLike}>
-                <AntDesign
-                    name={like ? `heart` : 'hearto'}
-                    size={24}
-                    style={styles.icon}
-                    color={like ? '#ED4956' : 'black'}
-                />
-            </Pressable>
-                <Ionicons
-                    name="chatbubble-outline"
-                    size={24}
-                    style={styles.icon}
-                    color={'black'}
-                />
-                <Feather
-                    name="send"
-                    size={24}
-                    style={styles.icon}
-                    color={'black'}
-                />
-                <Feather
-                    name="bookmark"
-                    size={24}
-                    style={{marginLeft: 'auto'}}
-                    color={'black'}
-                />
+            {postLikes.length === 0 ? (
+                <Text>Be the first to like this post</Text>
+            ) : (
+                    <Text onPress={navigateToLikesPage}>
+                        Liked by 
+                        <Text style={{fontWeight: 'bold'}}> {postLikes[0]?.User?.username} </Text>
+                        {postLikes.length > 1 && (
+                            <>
+                                and
+                                <Text style={{fontWeight: 'bold'}}> {post.nofLikes - 1} others </Text>
+                            </>
+                        )} 
+                    </Text>
+            )}
+
+            <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}} numberOfLines={isDescExpanded ? null : 2}>{post.User?.username}
+                <Text style={{fontWeight: 'normal'}}> {post.description}</Text>
+            </Text>
+            {post.description.length >= DESCRIPTION_BREAKPOINT && (
+                <Pressable onPress={toggleDescription}>
+                    <Text style={styles.lessMoreText} >Read {isDescExpanded ? 'Less' : 'More'}</Text>
+                </Pressable>
+            )}
+
+            <Text style={{color: 'grey', marginTop: '2%'}} onPress={navigateToComments}>View all {post.nofComments} comments</Text>
+            {(post.Comments?.items || []).map(comment => (
+                <Comment comment={comment} key={comment.id}/>
+            ))}
+            <Text style={{color: 'grey', marginTop: '2%', fontSize: 13}}>{post.createdAt}</Text>
         </View>
-
-        <Text>
-            Liked by 
-            <Text style={{fontWeight: 'bold'}}> {post.User?.username} </Text>
-            and 
-            <Text style={{fontWeight: 'bold'}}> {post.nofLikes} others </Text>
-        </Text>
-
-        <Text style={{fontWeight: 'bold', marginTop: '2%', lineHeight: 19}} numberOfLines={isDescExpanded ? null : 2}>{post.User?.username}
-            <Text style={{fontWeight: 'normal'}}> {post.description}</Text>
-        </Text>
-        {post.description.length >= DESCRIPTION_BREAKPOINT && (
-              <Pressable onPress={toggleDescription}>
-                <Text style={styles.lessMoreText} >Read {isDescExpanded ? 'Less' : 'More'}</Text>
-              </Pressable>
-        )}
-
-        <Text style={{color: 'grey', marginTop: '2%'}} onPress={navigateToComments}>View all {post.nofComments} comments</Text>
-        {(post.Comments?.items || []).map(comment => (
-            <Comment comment={comment} key={comment.id}/>
-        ))}
-        <Text style={{color: 'grey', marginTop: '2%', fontSize: 13}}>{post.createdAt}</Text>
-    </View>
-
     </View>
   )
 }
-
 
 export default Post

@@ -37,6 +37,18 @@ export const listPosts = gql`
             }
           }
         }
+        Likes {
+          items {
+            id
+            _deleted
+            User {
+              id
+              username
+            }
+          }
+          startedAt
+          nextToken
+        }
       }
       nextToken
       startedAt

@@ -1,8 +1,8 @@
 type Like @model @auth(rules: [{allow: public}]) {
   id: ID!
   userID: ID! @index(name: "byUser")
-  postID: ID! @index(name: "byPost")
-  commentID: ID! @index(name: "byComment")
+  postID: ID! @index(name: "byPost", queryField: "likesForPostByUser", sortKeyFields: ["userID"])
+  commentID: ID @index(name: "byComment")
   Post: Post @belongsTo(fields: ["postID"])
   User: User @belongsTo(fields: ["userID"])
   Comment: Comment @belongsTo(fields: ["commentID"])
