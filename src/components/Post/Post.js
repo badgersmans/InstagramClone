@@ -12,6 +12,7 @@ import { DEFAULT_USER_IMAGE } from '../../config';
 import PostMenu from './PostMenu';
 import useLikeService from '../../services/LikeService';
 
+
 const Post = ({post, isVisible}) => {
     const { toggleLike, isLiked} = useLikeService(post);
     const navigation = useNavigation();
@@ -141,7 +142,7 @@ const Post = ({post, isVisible}) => {
 
             <Text style={{color: 'grey', marginTop: '2%'}} onPress={navigateToComments}>View all {post.nofComments} comments</Text>
             {(post.Comments?.items || []).map(comment => (
-                <Comment comment={comment} key={comment.id}/>
+                <Comment comment={comment} key={comment.id} />
             ))}
             <Text style={{color: 'grey', marginTop: '2%', fontSize: 13}}>{post.createdAt}</Text>
         </View>

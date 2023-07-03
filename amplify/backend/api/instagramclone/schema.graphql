@@ -12,7 +12,7 @@ type Comment @model @auth(rules: [{allow: public}]) {
   id: ID!
   comment: String!
   userID: ID! @index(name: "byUser")
-  postID: ID! @index(name: "byPost")
+  postID: ID! @index(name: "byPost", queryField: "commentsByPost")
   Likes: [Like] @hasMany(indexName: "byComment", fields: ["id"])
   Post: Post @belongsTo(fields: ["postID"])
   User: User @belongsTo(fields: ["userID"])

@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 15,
         // marginBottom: 10
-        
     },
     postButtonContainer: {
         marginLeft: 'auto',

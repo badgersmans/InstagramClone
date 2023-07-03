@@ -5,12 +5,12 @@ import styles from './styles';
 import { Image } from 'expo-image';
 import { DEFAULT_USER_IMAGE } from '../../config';
 
-const Comment = ({ comment, includeDetails = false, margin = '2%' }) => {
+const Comment = ({ comment, includeDetails = false, marginBottom = '2%', marginTop = 0}) => {
   const [isCommentExpanded, setIsCommentExpanded] = useState(false);
   const [like, setLike] = useState(false);
   // console.log(margin)
   // console.log(comment.comment.length)
-  const COMMENT_BREAKPOINT = 115;
+  const COMMENT_BREAKPOINT = 30;
   const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
@@ -26,7 +26,8 @@ const Comment = ({ comment, includeDetails = false, margin = '2%' }) => {
     <View style={{
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: margin,
+      marginBottom,
+      marginTop,
       // backgroundColor: 'green'
     }}>
 
@@ -41,7 +42,7 @@ const Comment = ({ comment, includeDetails = false, margin = '2%' }) => {
       )}
 
         <View style={{flex: 1}}>
-          <Text style={styles.commentContainer} numberOfLines={isCommentExpanded ? null : 2}>{comment.user.username}
+          <Text style={styles.commentContainer} numberOfLines={isCommentExpanded ? null : 2}>{comment.User.username}
               <Text style={{fontWeight: 'normal'}}> {comment.comment}</Text>
           </Text>
 
